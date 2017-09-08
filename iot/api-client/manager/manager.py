@@ -64,7 +64,6 @@ def get_client(service_account_json, api_key):
     """Returns an authorized API client by discovering the IoT API using the
     provided API key and creating a service object using the service account
     credentials JSON."""
-    # [START authorize]
     api_scopes = ['https://www.googleapis.com/auth/cloud-platform']
     api_version = 'v1beta1'
     discovery_api = 'https://cloudiot.googleapis.com/$discovery/rest'
@@ -82,7 +81,6 @@ def get_client(service_account_json, api_key):
             api_version,
             discoveryServiceUrl=discovery_url,
             credentials=scoped_credentials)
-    # [END authorize]
 
 
 def create_rs256_device(
@@ -90,7 +88,6 @@ def create_rs256_device(
         device_id, certificate_file):
     """Create a new device with the given id, using RS256 for
     authentication."""
-    # [START create_rs256_device]
     registry_name = 'projects/{}/locations/{}/registries/{}'.format(
             project_id, cloud_region, registry_id)
 
@@ -111,7 +108,6 @@ def create_rs256_device(
 
     devices = client.projects().locations().registries().devices()
     return devices.create(parent=registry_name, body=device_template).execute()
-    # [END create_rs256_device]
 
 
 def create_es256_device(
@@ -119,7 +115,6 @@ def create_es256_device(
         device_id, public_key_file):
     """Create a new device with the given id, using ES256 for
     authentication."""
-    # [START create_rs256_device]
     registry_name = 'projects/{}/locations/{}/registries/{}'.format(
             project_id, cloud_region, registry_id)
 
@@ -140,14 +135,12 @@ def create_es256_device(
 
     devices = client.projects().locations().registries().devices()
     return devices.create(parent=registry_name, body=device_template).execute()
-    # [END create_rs256_device]
 
 
 def create_unauth_device(
         service_account_json, api_key, project_id, cloud_region, registry_id,
         device_id):
     """Create a new device without authentication."""
-    # [START create_noauth_device]
     registry_name = 'projects/{}/locations/{}/registries/{}'.format(
             project_id, cloud_region, registry_id)
 
@@ -158,14 +151,12 @@ def create_unauth_device(
 
     devices = client.projects().locations().registries().devices()
     return devices.create(parent=registry_name, body=device_template).execute()
-    # [END create_noauth_device]
 
 
 def delete_device(
         service_account_json, api_key, project_id, cloud_region, registry_id,
         device_id):
     """Delete the device with the given id."""
-    # [START delete_device]
     print('Delete device')
     client = get_client(service_account_json, api_key)
     registry_name = 'projects/{}/locations/{}/registries/{}'.format(
@@ -175,13 +166,11 @@ def delete_device(
 
     devices = client.projects().locations().registries().devices()
     return devices.delete(name=device_name).execute()
-    # [END delete_device]
 
 
 def delete_registry(
         service_account_json, api_key, project_id, cloud_region, registry_id):
     """Deletes the specified registry."""
-    # [START delete_registry]
     print('Delete registry')
     client = get_client(service_account_json, api_key)
     registry_name = 'projects/{}/locations/{}/registries/{}'.format(
@@ -189,14 +178,12 @@ def delete_registry(
 
     registries = client.projects().locations().registries()
     return registries.delete(name=registry_name).execute()
-    # [END delete_registry]
 
 
 def get_device(
         service_account_json, api_key, project_id, cloud_region, registry_id,
         device_id):
     """Retrieve the device with the given id."""
-    # [START delete_device]
     print('Getting device')
     client = get_client(service_account_json, api_key)
     registry_name = 'projects/{}/locations/{}/registries/{}'.format(
@@ -223,13 +210,11 @@ def get_device(
             'cloudUpdateTime')))
 
     return device
-    # [END delete_device]
 
 
 def list_devices(
         service_account_json, api_key, project_id, cloud_region, registry_id):
     """List all devices in the registry."""
-    # [START list_devices]
     print('Listing devices')
     registry_path = 'projects/{}/locations/{}/registries/{}'.format(
             project_id, cloud_region, registry_id)
@@ -243,7 +228,6 @@ def list_devices(
                     device.get('id')))
 
     return devices
-    # [list_devices]
 
 
 def open_registry(
